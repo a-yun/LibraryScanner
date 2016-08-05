@@ -21,10 +21,8 @@ namespace LibraryScanner
         public static Workbook wbDatabase, wbLog;
         public static Worksheet wsDatabase, wsLog;
 
-        private String databasePath;
         private String logPath;
         private String logFileName;
-        private String databaseFileName;
 
         private int tally;
         private int nextRow;
@@ -35,7 +33,6 @@ namespace LibraryScanner
             InitializeComponent();
 
             //Open excel
-            xlDatabase = new Microsoft.Office.Interop.Excel.Application();
             xlLog = new Microsoft.Office.Interop.Excel.Application();
             //Prevent log file from sending save overwrite alerts
             xlLog.DisplayAlerts = false;
@@ -44,20 +41,17 @@ namespace LibraryScanner
             idLabel.Text = "";
             nameLabel.Text = "";
             gradeLabel.Text = "";
-            updateDatabasePath((String)Properties.Settings.Default["databasePath"]);
             updateLogPath((String)Properties.Settings.Default["logPath"]);
             updateTally((int)Properties.Settings.Default["tally"]);
 
-            //File.SetAttributes(logPath, FileAttributes.ReadOnly);
-            createDatabase(databasePath);
         }
 
-        //Creates notepad file with database from Excel file. Input full path of file. 
-        private void createDatabase(String xlPath)
+        //Creates notepad file using database from Excel file.
+        private void importDatabase(String xlPath)
         {
-
-        
             //Opens Excel file
+            xlDatabase = new Microsoft.Office.Interop.Excel.Application();
+
             if (File.Exists(xlPath) && (xlPath.IndexOf(".xls") >= 0 || xlPath.IndexOf(".xlsx") >= 0)) //Checks if file is a valid Excel file.
             {
                 try
@@ -76,6 +70,13 @@ namespace LibraryScanner
                 MessageBox.Show("Student database does not exist. Please select a valid file.");
             }
 
+
+            if (wsDatabase.Cells.Find("ID") == null || wsDatabase.Cells.Find("Name") == null || wsDatabase.Cells.Find("Gr") == null)
+            {
+                MessageBox.Show("Database file does not have columns for \"Student Id\", \"Student Name\", and \"Grd\".");
+                return;
+            }
+
             //Finds columns with ID, name, and grade
             int idCol = wsDatabase.Cells.Find("ID").Column;
             int nameCol = wsDatabase.Cells.Find("Name").Column;
@@ -84,28 +85,19 @@ namespace LibraryScanner
 
             ArrayList data = new ArrayList();
 
-            while(row <= wsDatabase.UsedRange.Rows.Count)
+            while (row <= wsDatabase.UsedRange.Rows.Count)
             {
                 data.Add(wsDatabase.Cells[row, idCol].Value + ", " + wsDatabase.Cells[row, nameCol].Value + ", " + wsDatabase.Cells[row, gradeCol].Value);
                 row++;
                 data.Sort();
             }
 
-            System.IO.File.WriteAllLines(@"D:\Antony\Desktop\test.txt", (String[])data.ToArray(typeof(string)));
+            System.IO.File.WriteAllLines(logPath + "\\database.txt", (String[])data.ToArray(typeof(string)));
 
             xlDatabase.Quit();
         }
+        
 
-        //Sets textbox to path of student database
-        private void updateDatabasePath(String path)
-        {
-            databasePath = path;
-            databaseLabel.Text = databasePath;
-            Properties.Settings.Default["databasePath"] = databasePath;
-            Properties.Settings.Default.Save();
-            //TEST
-            openDatabase();
-        }
 
         //Sets textbox to folder where logs are stored
         private void updateLogPath(String path)
@@ -127,28 +119,6 @@ namespace LibraryScanner
             Properties.Settings.Default.Save();
         }
 
-        //Opens student database
-        private void openDatabase()
-        {
-            //Check if file is valid
-            if (File.Exists(databasePath) && (databasePath.IndexOf(".xls") >= 0 || databasePath.IndexOf(".xlsx") >= 0))
-            {
-                try
-                {
-                    wbDatabase = xlDatabase.Workbooks.Open(databasePath);
-                    wsDatabase = wbDatabase.ActiveSheet;
-                }
-                catch
-                {
-                    MessageBox.Show("Please close any open instances of the database.");
-                }
-                
-            }
-            else
-            {
-                MessageBox.Show("Student database does not exist. Please select a valid file.");
-            }
-        }
 
         //Creates and opens log file
         private void openLog()
@@ -228,42 +198,32 @@ namespace LibraryScanner
         //Finds student in database, displays their name on screen, and adds them to the log
         private void recordStudent(String id)
         {
-            //if(wbDatabase == null || wsDatabase == null)
+
+            openLog();
+
+            StreamReader db = new StreamReader(logPath + "\\database.txt");
+            String line;
+            String student = "";
+
+            while((line = db.ReadLine()) != null)
             {
-                openDatabase();
+                if (line.IndexOf(id) == 0)
+                {
+                    student = line;
+                    break;
+                }
             }
-
-            if(wbLog == null || wbDatabase == null)
-            {
-                openLog();
-            }
-
-
-            if (wsDatabase.Cells.Find("ID") == null || wsDatabase.Cells.Find("Name") == null || wsDatabase.Cells.Find("Gr") == null)
-            {
-                MessageBox.Show("Database file does not have columns for \"Student Id\", \"Student Name\", and \"Grd\".");
-                return;
-            }
-
-
-            int idCol = wsDatabase.Cells.Find("ID").Column;
-            int nameCol = wsDatabase.Cells.Find("Name").Column;
-            int gradeCol = wsDatabase.Cells.Find("Gr").Column;
-
-            
-
-            Range idCell = wsDatabase.Cells.Find(id);
+            db.Close();
             
             idBox.Text = "";
-            if(idCell == null)
+            if(student.Equals(""))
             {
                 MessageBox.Show("Student not found.");
                 return;
             }
 
-            int studentRow = idCell.Row;
-            String name = wsDatabase.Cells[studentRow, nameCol].Value;
-            String grade = ""+wsDatabase.Cells[studentRow, gradeCol].Value;
+            String name = student.Substring(student.IndexOf(",")+2, student.LastIndexOf(",") - student.IndexOf(",") - 1);
+            String grade = student.Substring(student.LastIndexOf(",")+2);
             DateTime time = DateTime.Now;
 
             idLabel.Text = id;
@@ -382,11 +342,7 @@ namespace LibraryScanner
             //Checks if file is valid and updates path
             if (result == DialogResult.OK && File.Exists(fileName) && (fileName.IndexOf(".xls") >= 0 || fileName.IndexOf(".xlsx") >= 0))
             {
-                updateDatabasePath(fileName);
-                if(wbDatabase == null)
-                {
-                    openDatabase();
-                }
+                importDatabase(fileName);
             }
             else if(result != DialogResult.Cancel)
             {
@@ -414,7 +370,6 @@ namespace LibraryScanner
                 return;
             }
 
-            xlDatabase.Quit();
             xlLog.Quit();
             File.SetAttributes(logFileName, FileAttributes.ReadOnly);
         }

@@ -118,7 +118,7 @@
             this.databaseBrowseButton.Name = "databaseBrowseButton";
             this.databaseBrowseButton.Size = new System.Drawing.Size(100, 38);
             this.databaseBrowseButton.TabIndex = 6;
-            this.databaseBrowseButton.Text = "Browse";
+            this.databaseBrowseButton.Text = "Import";
             this.databaseBrowseButton.UseVisualStyleBackColor = true;
             this.databaseBrowseButton.Click += new System.EventHandler(this.databaseBrowseButton_Click);
             // 

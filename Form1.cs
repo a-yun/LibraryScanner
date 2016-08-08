@@ -106,6 +106,28 @@ namespace LibraryScanner
         //Sets textbox to folder where logs are stored
         private void updateLogPath(String path)
         {
+            //Checks if path has changed
+            if (logPath != null && logPath.Equals(path))
+            {
+                //MessageBox.Show("blep");
+            }
+            
+            //Move database.txt file to new directory 
+            String dbPath = logPath + "\\database.txt";
+            if (File.Exists(dbPath))
+                System.IO.File.Move(dbPath, path + "\\database.txt");
+
+            //Save and quit log if open
+            try
+            {
+                File.SetAttributes(logFileName, ~FileAttributes.ReadOnly);
+                wbLog.Save();
+                xlLog.Quit();
+                File.SetAttributes(logFileName, FileAttributes.ReadOnly);
+            }
+            catch
+            { }
+
             logPath = path;
             logLabel.Text = logPath;
             Properties.Settings.Default["logPath"] = logPath;

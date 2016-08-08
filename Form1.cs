@@ -92,7 +92,11 @@ namespace LibraryScanner
                 data.Sort();
             }
 
-            System.IO.File.WriteAllLines(logPath + "\\database.txt", (String[])data.ToArray(typeof(string)));
+            String dbPath = logPath + "\\database.txt";
+
+            System.IO.File.WriteAllLines(dbPath, (String[])data.ToArray(typeof(string)));
+
+            File.SetAttributes(dbPath, File.GetAttributes(dbPath) | FileAttributes.Hidden);
 
             xlDatabase.Quit();
         }
@@ -409,20 +413,20 @@ namespace LibraryScanner
         }
 
         //Stops log from being deleted, courtesy of MSDN
-        private void lockFile()
+        private void lockFile(String fileName)
         {
-            FileSecurity fSecurity = File.GetAccessControl(logFileName);
+            FileSecurity fSecurity = File.GetAccessControl(fileName);
             fSecurity.AddAccessRule(new FileSystemAccessRule("Authenticated Users", FileSystemRights.Read, AccessControlType.Allow));
             fSecurity.AddAccessRule(new FileSystemAccessRule("Authenticated Users", FileSystemRights.Write, AccessControlType.Deny));
-            File.SetAccessControl(logFileName, fSecurity);
+            File.SetAccessControl(fileName, fSecurity);
         }
 
-        private void unlockFile()
+        private void unlockFile(String fileName)
         {
-            FileSecurity fSecurity = File.GetAccessControl(logFileName);
+            FileSecurity fSecurity = File.GetAccessControl(fileName);
             fSecurity.AddAccessRule(new FileSystemAccessRule("Authenticated Users", FileSystemRights.Read, AccessControlType.Allow));
             fSecurity.AddAccessRule(new FileSystemAccessRule("Authenticated Users", FileSystemRights.Write, AccessControlType.Allow));
-            File.SetAccessControl(logFileName, fSecurity);
+            File.SetAccessControl(fileName, fSecurity);
         }
     }
 }

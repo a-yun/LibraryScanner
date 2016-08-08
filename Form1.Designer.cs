@@ -245,7 +245,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(357, 25);
             this.label9.TabIndex = 21;
-            this.label9.Text = "© 2015 Antony Yun All Rights Reserved";
+            this.label9.Text = "© 2016 Antony Yun All Rights Reserved";
             // 
             // label10
             // 
@@ -295,7 +295,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
-            this.Text = "Library Scanner v1.0";
+            this.Text = "Library Scanner v1.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

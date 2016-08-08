@@ -226,7 +226,7 @@ namespace LibraryScanner
                 return;
             }
 
-            String name = student.Substring(student.IndexOf(",")+2, student.LastIndexOf(",") - student.IndexOf(",") - 1);
+            String name = student.Substring(student.IndexOf(",")+2, student.LastIndexOf(",") - student.IndexOf(",") - 2);
             String grade = student.Substring(student.LastIndexOf(",")+2);
             DateTime time = DateTime.Now;
 

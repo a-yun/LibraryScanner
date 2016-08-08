@@ -35,8 +35,6 @@
             this.idBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.databaseBrowseButton = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.databaseLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.logLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -114,39 +112,19 @@
             // databaseBrowseButton
             // 
             this.databaseBrowseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.databaseBrowseButton.Location = new System.Drawing.Point(867, 39);
+            this.databaseBrowseButton.Location = new System.Drawing.Point(789, 90);
             this.databaseBrowseButton.Name = "databaseBrowseButton";
-            this.databaseBrowseButton.Size = new System.Drawing.Size(100, 38);
+            this.databaseBrowseButton.Size = new System.Drawing.Size(178, 38);
             this.databaseBrowseButton.TabIndex = 6;
-            this.databaseBrowseButton.Text = "Import";
+            this.databaseBrowseButton.Text = "Import Database";
             this.databaseBrowseButton.UseVisualStyleBackColor = true;
             this.databaseBrowseButton.Click += new System.EventHandler(this.databaseBrowseButton_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.label4.Location = new System.Drawing.Point(36, 40);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(240, 31);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Student Database:";
-            // 
-            // databaseLabel
-            // 
-            this.databaseLabel.AutoSize = true;
-            this.databaseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.databaseLabel.Location = new System.Drawing.Point(282, 50);
-            this.databaseLabel.Name = "databaseLabel";
-            this.databaseLabel.Size = new System.Drawing.Size(31, 20);
-            this.databaseLabel.TabIndex = 9;
-            this.databaseLabel.Text = "C:\\";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.label5.Location = new System.Drawing.Point(92, 94);
+            this.label5.Location = new System.Drawing.Point(92, 40);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(184, 31);
             this.label5.TabIndex = 10;
@@ -156,7 +134,7 @@
             // 
             this.logLabel.AutoSize = true;
             this.logLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.logLabel.Location = new System.Drawing.Point(282, 104);
+            this.logLabel.Location = new System.Drawing.Point(282, 50);
             this.logLabel.Name = "logLabel";
             this.logLabel.Size = new System.Drawing.Size(31, 20);
             this.logLabel.TabIndex = 11;
@@ -260,7 +238,7 @@
             // logBrowseButton
             // 
             this.logBrowseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.logBrowseButton.Location = new System.Drawing.Point(867, 93);
+            this.logBrowseButton.Location = new System.Drawing.Point(867, 39);
             this.logBrowseButton.Name = "logBrowseButton";
             this.logBrowseButton.Size = new System.Drawing.Size(100, 38);
             this.logBrowseButton.TabIndex = 12;
@@ -285,8 +263,6 @@
             this.Controls.Add(this.logBrowseButton);
             this.Controls.Add(this.logLabel);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.databaseLabel);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.databaseBrowseButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.idBox);
@@ -311,8 +287,6 @@
         private System.Windows.Forms.TextBox idBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button databaseBrowseButton;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label databaseLabel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label logLabel;
         private System.Windows.Forms.Label label6;

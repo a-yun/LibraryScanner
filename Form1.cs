@@ -94,6 +94,10 @@ namespace LibraryScanner
 
             String dbPath = logPath + "\\database.txt";
 
+            if(File.Exists(dbPath))
+            {
+                File.Delete(dbPath);
+            }
             System.IO.File.WriteAllLines(dbPath, (String[])data.ToArray(typeof(string)));
 
             File.SetAttributes(dbPath, File.GetAttributes(dbPath) | FileAttributes.Hidden);

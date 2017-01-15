@@ -231,29 +231,38 @@ namespace LibraryScanner
 
             openLog();
 
-            StreamReader db = new StreamReader(logPath + "\\database.txt");
-            String line;
+            String line, name, grade;
             String student = "";
 
-            while((line = db.ReadLine()) != null)
+            // Handle generic student
+            if (id.Equals("N/A"))
             {
-                if (line.IndexOf(id) == 0)
+                name = "N/A";
+                grade = "N/A";
+            }
+            else
+            {
+                StreamReader db = new StreamReader(logPath + "\\database.txt");
+                while ((line = db.ReadLine()) != null)
                 {
-                    student = line;
-                    break;
+                    if (line.IndexOf(id) == 0)
+                    {
+                        student = line;
+                        break;
+                    }
                 }
-            }
-            db.Close();
-            
-            idBox.Text = "";
-            if(student.Equals(""))
-            {
-                MessageBox.Show("Student not found.");
-                return;
-            }
+                db.Close();
 
-            String name = student.Substring(student.IndexOf(",")+2, student.LastIndexOf(",") - student.IndexOf(",") - 2);
-            String grade = student.Substring(student.LastIndexOf(",")+2);
+                idBox.Text = "";
+                if (student.Equals(""))
+                {
+                    MessageBox.Show("Student not found.");
+                    return;
+                }
+
+                name = student.Substring(student.IndexOf(",") + 2, student.LastIndexOf(",") - student.IndexOf(",") - 2);
+                grade = student.Substring(student.LastIndexOf(",") + 2);
+            }
             DateTime time = DateTime.Now;
 
             idLabel.Text = id;
@@ -428,6 +437,12 @@ namespace LibraryScanner
         {
             updateTally(0);
             //openLog();
+        }
+
+        //Records generic student if they don't have an ID
+        private void overrideButton_Click(object sender, EventArgs e)
+        {
+            recordStudent("N/A");
         }
 
         //Sends enter key to idBox when button is pressed

@@ -47,6 +47,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.logBrowseButton = new System.Windows.Forms.Button();
+            this.overrideButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -246,11 +247,25 @@
             this.logBrowseButton.UseVisualStyleBackColor = true;
             this.logBrowseButton.Click += new System.EventHandler(this.logBrowseButton_Click);
             // 
+            // overrideButton
+            // 
+            this.overrideButton.BackColor = System.Drawing.Color.Lime;
+            this.overrideButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.overrideButton.ForeColor = System.Drawing.Color.Black;
+            this.overrideButton.Location = new System.Drawing.Point(847, 172);
+            this.overrideButton.Name = "overrideButton";
+            this.overrideButton.Size = new System.Drawing.Size(120, 38);
+            this.overrideButton.TabIndex = 23;
+            this.overrideButton.Text = "Override";
+            this.overrideButton.UseVisualStyleBackColor = false;
+            this.overrideButton.Click += new System.EventHandler(this.overrideButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1041, 606);
+            this.Controls.Add(this.overrideButton);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
@@ -299,6 +314,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button logBrowseButton;
+        private System.Windows.Forms.Button overrideButton;
     }
 }
 

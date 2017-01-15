@@ -94,7 +94,7 @@ namespace LibraryScanner
 
             String dbPath = logPath + "\\database.txt";
 
-            if(File.Exists(dbPath))
+            if (File.Exists(dbPath))
             {
                 File.Delete(dbPath);
             }
@@ -104,7 +104,7 @@ namespace LibraryScanner
 
             xlDatabase.Quit();
         }
-        
+
 
 
         //Sets textbox to folder where logs are stored
@@ -115,7 +115,7 @@ namespace LibraryScanner
             {
                 //MessageBox.Show("blep");
             }
-            
+
             //Move database.txt file to new directory 
             String dbPath = logPath + "\\database.txt";
             if (File.Exists(dbPath))
@@ -144,7 +144,7 @@ namespace LibraryScanner
         private void updateTally(int t)
         {
             tally = t;
-            tallyLabel.Text = ""+tally;
+            tallyLabel.Text = "" + tally;
             Properties.Settings.Default["tally"] = tally;
             Properties.Settings.Default.Save();
         }
@@ -155,10 +155,10 @@ namespace LibraryScanner
         {
             logFileName = logPath + "\\Library_Log_";
             DateTime today = DateTime.Today;
-            logFileName += today.ToString("MM_yyyy")+".xlsx";
-            if(File.Exists(logFileName))
+            logFileName += today.ToString("MM_yyyy") + ".xlsx";
+            if (File.Exists(logFileName))
             {
-                
+
                 //xlLog.Visible = true;
                 try
                 {
@@ -175,7 +175,7 @@ namespace LibraryScanner
 
                 //Range startCell = wsLog.Cells[1, 1];
                 //Range endCell = wsLog.Cells[65536, 5];
-                nextRow = wsLog./*Range[startCell,endCell].*/UsedRange.Rows.Count+1;
+                nextRow = wsLog./*Range[startCell,endCell].*/UsedRange.Rows.Count + 1;
 
             }
             else
@@ -210,7 +210,8 @@ namespace LibraryScanner
                 wsLog.Columns[9].ColumnWidth = 10;
 
                 //File.SetAttributes(logFileName, ~FileAttributes.ReadOnly);
-                try {
+                try
+                {
                     wbLog.SaveAs(logFileName);
                 }
                 catch { }
@@ -302,14 +303,14 @@ namespace LibraryScanner
             }
 
             int row = 2;
-            while(wsLog.Cells[row,7].Value != null)
+            while (wsLog.Cells[row, 7].Value != null)
             {
                 row++;
             }
 
             String date = DateTime.Today.ToString("MM/dd/yyyy");
             //MessageBox.Show(wsLog.Cells[row - 1, 7].Value.GetType().ToString());
-            if (wsLog.Cells[row-1,7].Value.ToString() == DateTime.Today.ToString())
+            if (wsLog.Cells[row - 1, 7].Value.ToString() == DateTime.Today.ToString())
             {
                 //wsLog.Cells[row-1, 8].Value = Int32.Parse(wsLog.Cells[row-1, 8].Value) + 1;
                 wsLog.Cells[row - 1, 8].Value = wsLog.Cells[row - 1, 8].Value + 1;
@@ -333,11 +334,11 @@ namespace LibraryScanner
             String text = box.Text;
 
             //Remove non numerical characters
-            for(int i=0; i<text.Length; i++)
+            for (int i = 0; i < text.Length; i++)
             {
                 if (text.Length > 0 && ((int)text[i] < 48 || (int)text[i] > 57))
                 {
-                    box.Text = text.Substring(0, i) + text.Substring(i+1);
+                    box.Text = text.Substring(0, i) + text.Substring(i + 1);
                     box.Select(i, 0);
                 }
             }
@@ -348,12 +349,12 @@ namespace LibraryScanner
         {
             //Check if key pressed is Enter
             if (e.KeyCode == Keys.Enter)
-            {                
+            {
                 //Retrieve text from textbox
                 System.Windows.Forms.TextBox box = (System.Windows.Forms.TextBox)sender;
                 String text = box.Text;
 
-                if(text.Length != 7)
+                if (text.Length != 7)
                 {
                     box.Text = "";
                     MessageBox.Show("ID Must be 7 digits long.");
@@ -362,7 +363,7 @@ namespace LibraryScanner
 
                 recordStudent(text);
 
-                
+
             }
         }
 
@@ -383,7 +384,7 @@ namespace LibraryScanner
             {
                 importDatabase(fileName);
             }
-            else if(result != DialogResult.Cancel)
+            else if (result != DialogResult.Cancel)
             {
                 MessageBox.Show("File does not exist or is not a valid Excel file.");
             }

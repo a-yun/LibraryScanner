@@ -85,6 +85,8 @@ namespace LibraryScanner
 
             ArrayList data = new ArrayList();
 
+            MessageBox.Show("Please wait. Press \"OK\", and a new pop up will notify you when the database has finished importing.");
+
             while (row <= wsDatabase.UsedRange.Rows.Count)
             {
                 data.Add(wsDatabase.Cells[row, idCol].Value + ", " + wsDatabase.Cells[row, nameCol].Value + ", " + wsDatabase.Cells[row, gradeCol].Value);
@@ -103,6 +105,8 @@ namespace LibraryScanner
             File.SetAttributes(dbPath, File.GetAttributes(dbPath) | FileAttributes.Hidden);
 
             xlDatabase.Quit();
+
+            MessageBox.Show("Importing complete.");
         }
 
 
